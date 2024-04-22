@@ -1,0 +1,2 @@
+
+ Trong không gian $Oxyz$, cho hai đường thẳng (d 1 ): $\frac{x-1}{2}= \frac{y-3}{4} = \frac{z-4}{1}$ và (d 2 ): $\frac{x-6}{3}= \frac{y+2}{1} = \frac{z+1}{-2}$. Mặt phẳng $(P): ax + y + cz  + d = 0$ chứa (d 1 ) và tạo với (d 2 ) một góc lớn nhất. Hỏi giá trị của biểu thức $T = a + c + d $ bằng bao nhiêu?  A. $T = 3$.                            B. $T = 7$.                          C. $T = 0$.                         D. $T = -147$. 
