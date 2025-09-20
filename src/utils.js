@@ -5,19 +5,17 @@ function delay(time = 3) {
 }
 
 function addBaseUrlToImage(htmlString) {
-  const regex = /<img src="([^"]+)"/g;
+  const regex = /<img([^>]*?)src="([^"]+)"([^>]*?)>/g;
   const baseUrl = "https://lmf.com.vn";
 
-  // const formatedString = htmlString.replace('src="/storage', `src="${baseUrl}`);
-  // return formatedString;
-  return htmlString.replace(regex, (match, src) => {
-    // Check if the src already has a protocol
-    if (/http:|https:/.test(src)) {
-      return match; // Return the original match if the URL is already absolute
-    } else {
-      // Prepend the base URL before the src path
-      return `<img src="${baseUrl}${src}"`;
-    }
+  return htmlString.replace(regex, (match, beforeSrc, src, afterSrc) => {
+      // Check if the src already has a protocol
+      if (/^https?:/.test(src)) {
+          return match; // Return the original match if the URL is already absolute
+      } else {
+          // Prepend the base URL before the src path, keeping all other attributes
+          return `<img${beforeSrc}src="${baseUrl}${src}"${afterSrc}>`;
+      }
   });
 }
 

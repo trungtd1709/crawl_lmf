@@ -18,7 +18,7 @@ function extractLatexStrings(inputString) {
   return matches;
 }
 
-async function replaceLatexWithImgTags(htmlString) {
+async function replaceLatexWithImgTags(htmlString, id) {
   // Extract LaTeX strings
   const latexMatches = extractLatexStrings(htmlString);
 
@@ -39,6 +39,7 @@ async function replaceLatexWithImgTags(htmlString) {
         htmlString = htmlString.replace(`$${latex}$`, data.svg);
       }
     } catch (error) {
+      console.error("[ERR HTML]: " + htmlString);
       console.error("Error converting LaTeX to SVG:", error);
     }
   }
@@ -46,17 +47,17 @@ async function replaceLatexWithImgTags(htmlString) {
   return htmlString;
 }
 
-async function htmlToPng({ string, imgPath = "result.png" }) {
+async function htmlToPng({ string, imgPath = "result.png", _id }) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  const updatedHtmlString = await replaceLatexWithImgTags(string);
+  console.log("[id]: ", _id);
+  console.log("[ORIGIN HTML]: ", string);
+  const updatedHtmlString = await replaceLatexWithImgTags(string, _id);
+  console.log("[CHANGED HTML]: ", string);
 
-  // Set the content of the page to your HTML with the image tags
   await page.setContent(updatedHtmlString);
 
-  // Take a screenshot after the images have loaded
-  // await page.waitForSelector("svg", { visible: true });
   await page.screenshot({ path: imgPath, fullPage: true });
 
   await browser.close();
@@ -64,7 +65,3 @@ async function htmlToPng({ string, imgPath = "result.png" }) {
 }
 
 module.exports = { htmlToPng };
-
-// const string =
-//   "<p>Xét sự hội tụ của $\\int\\limits_{1}^{\\pi} \\dfrac{x \\sin x}{\\sqrt{\\ln x}}dx$</p>";
-// processHtmlString(string);

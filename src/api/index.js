@@ -30,7 +30,6 @@ const getPostsList = async (params) => {
       },
     };
   }
-  return res;
 };
 
 const getPostsDetail = async (id) => {
@@ -45,18 +44,8 @@ const getPostsDetail = async (id) => {
 const getCommentsNormal = async (params) => {
   const commentsListUrl = "/api/v1/posts/comments-normal";
   const res = await axiosClient.get(commentsListUrl, { params });
-  // if (res?.status == 200) {
   const { data = {} } = res;
   return data?.data ?? [];
-  // } else {
-  //   return {
-  //     data: [],
-  //     meta: {
-  //       itemCount: 0,
-  //     },
-  //   };
-  // }
-  return res;
 };
 
 async function setAccessToken(token) {

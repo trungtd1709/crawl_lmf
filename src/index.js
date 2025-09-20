@@ -1,18 +1,9 @@
 const {
-  login,
   getPostsList,
   getPostsDetail,
-  getPostsComments,
   getCommentsNormal,
 } = require("./api");
 const {
-  usernameInputSelector,
-  passwordInputSelector,
-  username,
-  password,
-  loginButtonClassname,
-  buttonSeeMoreSelector,
-  postSelector,
   userId,
   postTypeId,
 } = require("./const");
@@ -43,41 +34,17 @@ const main = async () => {
     });
     let htmlComment = "";
 
-    for (const comment of commentsNormalList) {
-      const { content } = comment;
-      htmlComment += `${content}<br/>`;
+    for (i = 0; i < commentsNormalList.length; i++) {
+      const { content } = commentsNormalList[i];
+      htmlComment += `<span>Comment ${i + 1}:</span> ${content}<br/>`;
     }
     createFolder();
     console.log(htmlPostContent);
     const htmlContent = addBaseUrlToImage(
       `<div>${htmlPostContent}<br/>${htmlComment}</div>`
     );
-    await htmlToPng({ string: htmlContent, imgPath: `images/${_id}.png` });
+    await htmlToPng({ string: htmlContent, imgPath: `images/${_id}.png` , _id});
   }
-  // console.log(res);
 };
-
-// /**
-//  * @param {puppeteer.Page} page
-//  */
-// const login = async (page) => {
-//   try {
-//     await page.waitForSelector(usernameInputSelector);
-//     await page.waitForSelector(passwordInputSelector);
-
-//     await page.type(usernameInputSelector, username);
-//     await page.type(passwordInputSelector, password);
-
-//     await page.waitForSelector(loginButtonClassname);
-//     const loginBtn = await page.$(loginButtonClassname);
-
-//     if (loginBtn) {
-//       loginBtn.click();
-//       await delay();
-//     }
-//   } catch (err) {
-//     console.log("[ERR login]: ", err);
-//   }
-// };
 
 main().catch(console.error);
